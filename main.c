@@ -6,6 +6,7 @@
 typedef struct scale {
 	char	*sc_name;
 	int	sc_notecnt;
+	char	*sc_notnam[SCALE_MAXNOTECNT];
 	int	sc_intv[SCALE_MAXNOTECNT];
 
 } scale_t;
@@ -14,12 +15,19 @@ scale_t		scales[] = {
 	{
 		"min_pent",
 		5,
+		{ "R", "1", "2", "3", "4" },
 		{ 0, 3, 5, 7, 10 }
+	},
+	{
+		"arp_7",
+		4,
+		{ "R", "3", "5", "b" },
+		{ 0, 4, 7, 10 }
 	}
 };
 
 
-#define STRINGCNT	16
+#define STRINGCNT	4
 #define FRETCNT		25
 
 #define SCALE_NOTE_NONE	-1
@@ -38,7 +46,7 @@ main(int argc, char **argv)
 	int	notenr;
 
 	root = 6;
-	sc = &scales[0];
+	sc = &scales[1];
 
 	for(t = 0; t < FRETCNT; ++t) {
 		if((t > 0) && ((t % 12) == 0)) {
@@ -74,7 +82,7 @@ main(int argc, char **argv)
 			}
 
 			if(notenr != SCALE_NOTE_NONE)
-				printf("%d-", notenr + 1);
+				printf("%s-", sc->sc_notnam[notenr]);
 			else
 				printf("|-");
 
